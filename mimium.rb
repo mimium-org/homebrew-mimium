@@ -19,18 +19,19 @@ class Mimium < Formula
   depends_on "llvm" =>:build
   depends_on "pkg-config" => :build
   on_linux do
-    depends_on "gcc" => :build
+    depends_on "gcc@9" => :build
   end
 
   def install
     mkdir "build"
     cd "build"
-    system "cmake", "-DBUILD_TEST=ON",
-              "..",
-              "-DCMAKE_BUILD_TYPE=Release",
-              "-DCMAKE_C_COMPILER=gcc",
-              "-DCMAKE_CXX_COMPILER=g++",
-              "-DCMAKE_INSTALL_PREFIX=#{prefix}"
+    if OS.mac?
+      system "cmake", "-DBUILD_TEST=ON", "..", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}"
+    elsif OS.linux?
+      system "cmake", "-DBUILD_TEST=ON", "..", "-DCMAKE_BUILD_TYPE=Release",
+      "-DCMAKE_CXX_COMPILER=g++-9", "-DCMAKE_INSTALL_PREFIX=#{prefix}"
+    end
+
     system "make", "-j18"
     system "make", "install"
   end
