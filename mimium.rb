@@ -20,7 +20,7 @@ class Mimium < Formula
     system "cmake", "-DBUILD_TEST=ON",
               "..",
               "-DCMAKE_BUILD_TYPE=Release",
-              "--DCMAKE_INSTALL_PREFIX=#{prefix}"
+              "-DCMAKE_INSTALL_PREFIX=#{prefix}"
     system "make", "-j18"
     system "make", "install"
   end
