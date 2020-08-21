@@ -29,7 +29,8 @@ class Mimium < Formula
       system "cmake", "-DBUILD_TEST=ON", "..", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}"
     elsif OS.linux?
       system "cmake", "-DBUILD_TEST=ON", "..", "-DCMAKE_BUILD_TYPE=Release",
-      "-DCMAKE_CXX_COMPILER=g++-9", "-DCMAKE_INSTALL_PREFIX=#{prefix}"
+      "-DCMAKE_C_COMPILER=gcc-9", "-DCMAKE_CXX_COMPILER=g++-9",
+      "-DCMAKE_INSTALL_PREFIX=#{prefix}"
     end
 
     system "make", "-j18"
