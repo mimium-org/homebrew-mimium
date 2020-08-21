@@ -30,6 +30,7 @@ class Mimium < Formula
     elsif OS.linux?
       system "cmake", "-DBUILD_TEST=ON", "..", "-DCMAKE_BUILD_TYPE=Release",
       "-DCMAKE_C_COMPILER=gcc-9", "-DCMAKE_CXX_COMPILER=g++-9",
+      '-DCMAKE_LINKER_FLAGS="-L/home/linuxbrew/opt/llvm/lib -Wl,-rpath,/home/linuxbrew/.linuxbrew/opt/llvm/lib"'
       "-DCMAKE_INSTALL_PREFIX=#{prefix}"
     end
 
