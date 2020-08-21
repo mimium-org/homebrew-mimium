@@ -26,12 +26,12 @@ class Mimium < Formula
     mkdir "build"
     cd "build"
     if OS.mac?
-      system "cmake", "-DBUILD_TEST=ON", "..", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}"
+      system "cmake", "-DBUILD_TEST=ON", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
     elsif OS.linux?
-      system "cmake", "-DBUILD_TEST=ON", "..", "-DCMAKE_BUILD_TYPE=Release",
+      system "cmake", "-DBUILD_TEST=ON", "-DCMAKE_BUILD_TYPE=Release",
       "-DCMAKE_C_COMPILER=gcc-9", "-DCMAKE_CXX_COMPILER=g++-9",
-      '-DCMAKE_LINKER_FLAGS="-L/home/linuxbrew/opt/llvm/lib -Wl,-rpath,/home/linuxbrew/.linuxbrew/opt/llvm/lib"'
-      "-DCMAKE_INSTALL_PREFIX=#{prefix}"
+      '-DCMAKE_LINKER_FLAGS="-L/home/linuxbrew/opt/llvm/lib -Wl,-rpath,/home/linuxbrew/.linuxbrew/opt/llvm/lib"',
+      "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
     end
 
     system "make", "-j18"
