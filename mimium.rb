@@ -4,8 +4,13 @@ class Mimium < Formula
   url "https://github.com/mimium-org/mimium.git", branch: "master"
   version "0.1.0"
   license "MPL-2.0"
-
   head "https://github.com/mimium-org/mimium.git", branch: "dev"
+
+  bottle do
+    root_url "https://github.com/mimium-org/homebrew-mimium/releases/download/v0.1.0"
+    cellar :any
+    sha256 "b6352041fe5dfe3864402f416866d1b42eab7c6284d579ed878cf5ca33499d13" => :catalina
+  end
 
   depends_on "bison" =>:build
   depends_on "cmake" => :build
