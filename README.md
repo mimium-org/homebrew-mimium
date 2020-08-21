@@ -1,0 +1,1 @@
+# Homebrew formula for [mimium](https:/github.com/mimium-org/mimium)
