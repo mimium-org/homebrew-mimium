@@ -8,8 +8,10 @@ class Mimium < Formula
 
   bottle do
     root_url "https://github.com/mimium-org/homebrew-mimium/releases/download/v0.1.1"
-    cellar :any
+    cellar :any_skip_relocation
+    rebuild 1
     sha256 "9280358ef2e80b378aead66f706cbf3f7cc54d8a7a0939246176b4b80f24c8af" => :catalina
+    sha256 "5b142d0355906f3cd6ed2d3efdd3d126466c05eb1641beadc79ee6406e6bf540" => :x86_64_linux
   end
 
   depends_on "bison" =>:build
