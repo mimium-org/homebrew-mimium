@@ -11,7 +11,7 @@ class Mimium < Formula
     cellar :any_skip_relocation
     rebuild 1
     sha256 "3d0b2a5fa7729f89c9b75b43ac9b418287cf5953e946c5b4d916241936fc3949" => :catalina
-    sha256 "5b142d0355906f3cd6ed2d3efdd3d126466c05eb1641beadc79ee6406e6bf540" => :x86_64_linux
+    sha256 "92485413647a3db9b94c912dc60eb50557050563d6b2f3e7a7de8aee6fc7388d" => :x86_64_linux
   end
 
   depends_on "bison" =>:build
