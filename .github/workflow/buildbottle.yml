@@ -1,0 +1,94 @@
+name: release
+on:
+  push:
+      tags: 
+        - 'v*'
+
+jobs:
+  create_release:
+    name: "Create Release"
+    runs-on : ubuntu-20.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+      upload_url: ${{ steps.create_release.outputs.html_url }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create Source Release
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft: false
+          prerelease: false 
+  build_and_upload:
+    name: "Build Bottle and Upload"
+    needs: create_release
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-20.04
+          - macos-latest
+        include:
+            - os: ubuntu-20.04
+              brew_gz_id: x86_64_linux
+            - os: macos-latest
+              brew_gz_id: catalina
+    steps:
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+      - if: contains(matrix.os, 'ubuntu')
+        name: deps-ubuntu
+        run: |
+          brew install gcc@9
+          brew unlink gcc@5.5
+          brew link gcc@9
+      - if: contains(matrix.os, 'macos')
+        name: deps-macos
+        run: |
+          brew install gsed
+          PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"    
+      - name: Build Bottle
+        run: |
+          brew tap mimium-org/mimium
+          brew update
+          brew install mimium --build-bottle
+          hashline=$(brew bottle mimium --root-url=https://github.com/mimium-org/homebrew-mimium/releases/download/${{steps.get_version.outputs.VERSION}} --verbose|grep "=> :${{ matrix.brew_gz_id }}")
+          gsed -i "/=> :${{ matrix.brew_gz_id }}/c  $hashline"  mimium.rb
+          brew audit --fix mimium.rb
+          gzname=$(find ./ -name "mimium--*.tar.gz" -type f)
+          wgzname=$(echo $gzname|sed -e 's/mimium--/mimium-/g')
+          mv -f $gzname $newgzname
+
+      - name: commit file changes
+        uses: EndBug/add-and-commit@v4 # You can change this to use a specific version
+        with:
+          src: 'mimium.rb'
+          message: Build and Upload bottle for ${{matrix.os}} by GitHub Action
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: get gzfile name
+        id: get_gzname
+        run: echo ::set-output name=NAME::$newgzname
+
+      - name: Upload Bottle to Release
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.get_gzname.outputs.NAME }}
+          asset_name: ${{ steps.get_gzname.outputs.NAME }}
+          asset_content_type: application/gzip
