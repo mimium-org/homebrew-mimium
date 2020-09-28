@@ -36,6 +36,8 @@ jobs:
           brew tap mimium-org/mimium
           git config --global user.name "brewTestBot"
           git config --global user.email "me@matsuuratomoya.com"
+          mkdir -p "$(dirname $(brew --repo ${{github.repository}}))"
+          cp -a "$GITHUB_WORKSPACE" "$(brew --repo ${{github.repository}})"
           mkdir ~/bottles && cd ~/bottles
           brew test-bot --cleanup --tap mimium-org/mimium mimium  
           cp -a ~/bottles $RUNNER_TEMP/
