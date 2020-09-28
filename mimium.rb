@@ -11,7 +11,7 @@ class Mimium < Formula
     root_url "https://github.com/mimium-org/homebrew-mimium/releases/download/v0.1.4"
     cellar :any_skip_relocation
     rebuild 1
-    sha256 "eb62a95a10ec1db69045c8186bac70c20d66328fe85fb18594a83319dcbfd901" => :catalina    
+    sha256 "eb62a95a10ec1db69045c8186bac70c20d66328fe85fb18594a83319dcbfd901" => :catalina
     sha256 "cc2a64bc6be7fab5dd560a0ac741a2c3d5244c2c4ea8a0006937b03ff8d2a577" => :x86_64_linux
   end
 

@@ -27,7 +27,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt upgrade
-          sudo apt-get install libalsa-ocaml-dev
+          sudo apt-get install libalsa-ocaml-dev -yq
           brew install gcc@5.5 
           brew unlink gcc@5.5
           brew install gcc@9
@@ -50,6 +50,7 @@ jobs:
           name: bottles
           path: ${{runner.temp}}/bottles
       - name: push sha commit to github
+        if: github.ref == 'refs/heads/master'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
