@@ -1,99 +1,41 @@
 name: release
 on:
-  push:
+  - push:
       tags: 
         - 'v*'
-
+  - pull_request
 jobs:
-  create_release:
-    name: "Create Release"
-    runs-on : ubuntu-20.04
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-      html_url: ${{ steps.create_release.outputs.html_url }}
+  build_and_upload:
+    name: "Build Bottle and Upload"
+    needs: create_release
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-20.04
+          - macos-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Create Source Release
-        id: create_release
-        uses: actions/create-release@v1.0.0
+      - if: contains(matrix.os, 'ubuntu')
+        name: deps-ubuntu
+        run: |
+          sudo apt update
+          sudo apt-get install libalsa-ocaml-dev
+          brew install gcc@5.5 
+          brew unlink gcc@5.5
+          brew install gcc@9
+      - name: Build Bottles
+        run: |
+        git -C "$(brew --repo ${{github.repository}})" status
+        git config --global user.name "brewTestBot"
+        mkdir ~/bottles && cd bottles
+        brew test-bot --cleanup --tap mimium-org/mimium mimium  
+        cp -a ~/bottles $RUNNER_TEMP/
+        brew pr-upload  --root-url=https://github.com/mimium-org/homebrew-mimium -v
+      - name: Upload bottle json
+        uses: actions/upload-artifact@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-          draft: false
-          prerelease: false 
-  # build_and_upload:
-  #   name: "Build Bottle and Upload"
-  #   needs: create_release
-  #   runs-on: ${{ matrix.os }}
-  #   timeout-minutes: 120
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       os:
-  #         - ubuntu-20.04
-  #         - macos-latest
-  #       include:
-  #           - os: ubuntu-20.04
-  #             brew_gz_id: x86_64_linux
-  #           - os: macos-latest
-  #             brew_gz_id: catalina
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Get the version
-  #       id: get_version
-  #       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-
-  #     - if: contains(matrix.os, 'ubuntu')
-  #       name: deps-ubuntu
-  #       run: |
-  #         sudo apt update
-  #         sudo apt-get install libalsa-ocaml-dev
-  #         brew install gcc@5.5 
-  #         brew unlink gcc@5.5
-  #         brew install gcc@9
-  #         echo "::set-env name=SED::sed"
-  #     - if: contains(matrix.os, 'macos')
-  #       name: deps-macos
-  #       run: |
-  #         brew install gsed
-  #         echo "::set-env name=SED::gsed"
-  #     - name: Build
-  #       run: |
-  #         brew tap mimium-org/mimium
-  #         brew update
-  #         brew install mimium --build-bottle
-  #         brew postinstall mimium-org/mimium/mimium
-  #     - name: Bottle
-  #       id: bottle
-  #       run: |
-  #         hashline=$(brew bottle mimium.rb --force-core-tap --root-url=https://github.com/mimium-org/homebrew-mimium/releases/download/${{steps.get_version.outputs.VERSION}} --verbose|grep "=> :${{ matrix.brew_gz_id }}")
-  #         echo $hashline
-  #         $SED -i "/=> :${{ matrix.brew_gz_id }}/c  $hashline"  mimium.rb
-  #         gzname=$(find ./ -name "mimium--*.tar.gz" -type f)
-  #         newgzname=$(echo $gzname|$SED -e 's/\.\/\/mimium--/mimium-/g')
-  #         mv -f $gzname $newgzname
-  #         echo "::set-output name=value::$newgzname"
-
-  #     - name: commit file changes
-  #       uses: EndBug/add-and-commit@v4 
-  #       with:
-  #         add: 'mimium.rb'
-  #         message: Build and Upload bottle for ${{matrix.os}} by GitHub Action
-
-  #     - name: Push changes
-  #       uses: ad-m/github-push-action@master
-  #       with:
-  #         github_token: ${{ secrets.GITHUB_TOKEN }}
-
-  #     - name: Upload Bottle to Release
-  #       id: upload-release-asset
-  #       uses: actions/upload-release-asset@v1.0.1
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       with:
-  #         upload_url: ${{ needs.create_release.outputs.upload_url }}
-  #         asset_path: ${{ steps.bottle.outputs.value }}
-  #         asset_name: ${{ steps.bottle.outputs.value }}
-  #         asset_content_type: application/gzip
+          name: bottles
+          path: ${{runner.temp}}/bottles
