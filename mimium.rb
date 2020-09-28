@@ -33,9 +33,8 @@ class Mimium < Formula
     elsif OS.linux?
       opoo "If you fail to install, try 'brew unlink gcc@5.5 && brew link gcc@9' before install.\
       After an installation, make sure to do  'brew link gcc@5.5 --overwrite'"
-      system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release",
-      "-DCMAKE_C_COMPILER=gcc-9", "-DCMAKE_CXX_COMPILER=g++-9",
-      "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
+      system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_C_COMPILER=gcc-9",
+             "-DCMAKE_CXX_COMPILER=g++-9", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
     end
 
     system "make", "-j18"
