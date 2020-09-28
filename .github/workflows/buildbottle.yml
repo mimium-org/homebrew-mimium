@@ -1,41 +1,42 @@
 name: release
 on:
-  - push:
-      tags: 
-        - 'v*'
-  - pull_request
+  push:
+   tags: 
+          - 'v*'
+   pull_request:
 jobs:
-  build_and_upload:
-    name: "Build Bottle and Upload"
-    needs: create_release
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 120
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - ubuntu-20.04
-          - macos-latest
-    steps:
-      - uses: actions/checkout@v2
-      - if: contains(matrix.os, 'ubuntu')
-        name: deps-ubuntu
-        run: |
-          sudo apt update
-          sudo apt-get install libalsa-ocaml-dev
-          brew install gcc@5.5 
-          brew unlink gcc@5.5
-          brew install gcc@9
-      - name: Build Bottles
-        run: |
-        git -C "$(brew --repo ${{github.repository}})" status
-        git config --global user.name "brewTestBot"
-        mkdir ~/bottles && cd bottles
-        brew test-bot --cleanup --tap mimium-org/mimium mimium  
-        cp -a ~/bottles $RUNNER_TEMP/
-        brew pr-upload  --root-url=https://github.com/mimium-org/homebrew-mimium -v
-      - name: Upload bottle json
-        uses: actions/upload-artifact@v1
-        with:
-          name: bottles
-          path: ${{runner.temp}}/bottles
+    build_and_upload:
+      name: "Build Bottle and Upload"
+      needs: create_release
+      runs-on: ${{ matrix.os }}
+      timeout-minutes: 120
+      strategy:
+        fail-fast: false
+        matrix:
+          os:
+            - ubuntu-20.04
+            - macos-latest
+      steps:
+        - uses: actions/checkout@v2
+        - if: contains(matrix.os, 'ubuntu')
+          name: deps-ubuntu
+          run: |
+            sudo apt update
+            sudo apt-get install libalsa-ocaml-dev
+            brew install gcc@5.5 
+            brew unlink gcc@5.5
+            brew install gcc@9
+        - name: Build Bottles
+          run: |
+            git -C "$(brew --repo ${{github.repository}})" status
+            git config --global user.name "brewTestBot"
+            git config --global user.email "me@matsuuratomoya.com"
+            mkdir ~/bottles && cd bottles
+            brew test-bot --cleanup --tap mimium-org/mimium mimium  
+            cp -a ~/bottles $RUNNER_TEMP/
+            brew pr-upload  --root-url=https://github.com/mimium-org/homebrew-mimium -v
+        - name: Upload bottle json
+          uses: actions/upload-artifact@v1
+          with:
+            name: bottles
+            path: ${{runner.temp}}/bottles
