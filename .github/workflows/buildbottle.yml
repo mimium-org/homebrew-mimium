@@ -30,6 +30,7 @@ jobs:
         run: |
         git -C "$(brew --repo ${{github.repository}})" status
         git config --global user.name "brewTestBot"
+        git config --global user.email "me@matsuuratomoya.com"
         mkdir ~/bottles && cd bottles
         brew test-bot --cleanup --tap mimium-org/mimium mimium  
         cp -a ~/bottles $RUNNER_TEMP/
