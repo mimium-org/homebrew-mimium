@@ -49,6 +49,6 @@ jobs:
       - name: push sha commit to github
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run:
+        run: |
         cd "$(brew --repo)/Library/Taps/mimium-org/homebrew-mimium"
         git push "https://brewTestBot:${{ secrets.GITHUB_TOKEN }}@github.com/${{github.repository}}" origin master
