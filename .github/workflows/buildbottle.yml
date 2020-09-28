@@ -39,7 +39,7 @@ jobs:
           mkdir -p "$(dirname $(brew --repo ${{github.repository}}))"
           cp -a "$GITHUB_WORKSPACE" "$(brew --repo ${{github.repository}})"
           mkdir ~/bottles && cd ~/bottles
-          brew test-bot --cleanup --tap mimium-org/mimium mimium  
+          brew test-bot --cleanup --tap mimium-org/mimium mimium  -v
           cp -a ~/bottles $RUNNER_TEMP/
 
       - name: upload bottle
