@@ -33,15 +33,18 @@ jobs:
           brew install gcc@9
       - name: Build Bottles
         run: |
+          brew tap mimium-org/mimium
           git -C "$(brew --repo ${{github.repository}})" status
           git config --global user.name "brewTestBot"
           git config --global user.email "me@matsuuratomoya.com"
-          brew tap mimium-org/mimium
-          mkdir ~/bottles && cd bottles
+          mkdir ~/bottles && cd ~/bottles
           brew test-bot --cleanup --tap mimium-org/mimium mimium  
           cp -a ~/bottles $RUNNER_TEMP/
-          brew pr-upload  --root-url=https://github.com/mimium-org/homebrew-mimium -v
-      - name: Upload bottle json
+
+      - name: upload bottle
+        run: brew pr-upload  --root-url=https://github.com/${{github.repository}} -v
+
+      - name: Upload bottle json artifact
         uses: actions/upload-artifact@v1
         with:
           name: bottles
