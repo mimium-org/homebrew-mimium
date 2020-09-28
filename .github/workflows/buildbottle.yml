@@ -3,7 +3,9 @@ on:
   push:
    tags: 
           - 'v*'
-   pull_request:
+  pull_request:
+    types: [assigned, opened, synchronize, reopened]
+    
 jobs:
     build_and_upload:
       name: "Build Bottle and Upload"
