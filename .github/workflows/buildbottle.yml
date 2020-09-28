@@ -22,6 +22,7 @@ jobs:
           name: deps-ubuntu
           run: |
             sudo apt update
+            sudo apt upgrade
             sudo apt-get install libalsa-ocaml-dev
             brew install gcc@5.5 
             brew unlink gcc@5.5
