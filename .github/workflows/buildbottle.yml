@@ -50,5 +50,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-        cd "$(brew --repo)/Library/Taps/mimium-org/homebrew-mimium"
-        git push "https://brewTestBot:${{ secrets.GITHUB_TOKEN }}@github.com/${{github.repository}}" origin master
+          cd "$(brew --repo)/Library/Taps/mimium-org/homebrew-mimium"
+          git push "https://brewTestBot:${{ secrets.GITHUB_TOKEN }}@github.com/${{github.repository}}" origin master
