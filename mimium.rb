@@ -14,10 +14,10 @@ class Mimium < Formula
     sha256 "eb62a95a10ec1db69045c8186bac70c20d66328fe85fb18594a83319dcbfd901" => :catalina
     sha256 "cc2a64bc6be7fab5dd560a0ac741a2c3d5244c2c4ea8a0006937b03ff8d2a577" => :x86_64_linux
   end
-
   depends_on "bison" =>:build
   depends_on "cmake" => :build
   depends_on "flex" =>:build
+  depends_on "gcc@9" =>:build if OS.linux?
   depends_on "llvm" =>:build
   depends_on "pkg-config" => :build
   depends_on "libsndfile"
@@ -25,7 +25,8 @@ class Mimium < Formula
   def install
     mkdir "build"
     cd "build"
-    ENV 'SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"' if OS.mac?
+    ENV["SDKROOT"]= "$(xcrun --sdk macosx --show-sdk-path)" if OS.mac?
+    ENV["HOMEBREW_CXX"] = "g++-9" if OS.linux?
     system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
     system "make", "-j18"
     system "make", "install"
