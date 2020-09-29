@@ -48,6 +48,7 @@ jobs:
           brew install gcc@5.5
           brew unlink gcc@5.5
           brew install gcc@9
+          brew cleanup
       - name: Checkout tap
         uses: actions/checkout@v2
       - name: Set up tap
