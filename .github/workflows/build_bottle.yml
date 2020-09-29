@@ -29,8 +29,15 @@ jobs:
     name: Build Linux bottle
     runs-on: ubuntu-latest
     container:
-      image: homebrew/ubuntu20.04:master
+      image: homebrew/ubuntu20.04:latest
     steps:
+      - name: Install deps
+        run: |
+        apt update
+        apt install libalsa-ocaml-dev -yq
+        brew install gcc@5.5
+        brew unlink gcc@5.5
+        brew install gcc@9
       - name: Checkout tap
         uses: actions/checkout@v2
       - name: Set up tap

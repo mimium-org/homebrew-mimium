@@ -29,7 +29,8 @@ class Mimium < Formula
     mkdir "build"
     cd "build"
     if OS.mac?
-      system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
+      system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", "..",
+             "-DCMAKE_OSX_SYSROOT='/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk'"
     elsif OS.linux?
       opoo "If you fail to install, try 'brew unlink gcc@5.5 && brew link gcc@9' before install.\
       After an installation, make sure to do  'brew link gcc@5.5 --overwrite'"
