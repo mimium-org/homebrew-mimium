@@ -25,9 +25,13 @@ class Mimium < Formula
   def install
     mkdir "build"
     cd "build"
-    ENV["SDKROOT"]= "$(xcrun --sdk macosx --show-sdk-path)" if OS.mac?
-    ENV["HOMEBREW_CXX"] = "g++-9" if OS.linux?
-    system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
+    if OS.mac?
+      ENV["SDKROOT"]= `xcrun --sdk macosx --show-sdk-path`
+      system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
+    elsif OS.linux?
+      system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", "..",
+             "-DCMAKE_CXX_COMPILER=g++9"
+    end
     system "make", "-j18"
     system "make", "install"
   end
