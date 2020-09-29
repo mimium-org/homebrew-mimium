@@ -61,9 +61,6 @@ jobs:
         run: |
           mkdir ~/bottles
           cd ~/bottles
-          brew unlink gcc
-          brew link gcc@9
-          brew cleanup
           brew test-bot --only-formulae --root-url=https://github.com/${{github.repository}}  --tap=${{github.repository}} -v
       - name: Output brew test-bot --only-formulae failures
         if: always()
