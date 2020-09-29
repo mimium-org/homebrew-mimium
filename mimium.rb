@@ -18,9 +18,9 @@ class Mimium < Formula
   depends_on "bison" =>:build
   depends_on "cmake" => :build
   depends_on "flex" =>:build
-  depends_on "libsndfile" => :build
   depends_on "llvm" =>:build
   depends_on "pkg-config" => :build
+  depends_on "libsndfile"
 
   def install
     mkdir "build"
@@ -29,8 +29,7 @@ class Mimium < Formula
       system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", "..",
              "-DCMAKE_OSX_SYSROOT='/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk'"
     elsif OS.linux?
-      system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_C_COMPILER=clang",
-             "-DCMAKE_CXX_COMPILER=clang++", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
+      system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
     end
 
     system "make", "-j18"
