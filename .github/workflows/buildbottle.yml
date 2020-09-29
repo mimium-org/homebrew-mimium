@@ -6,6 +6,11 @@ on:
   pull_request:
     types: [assigned, opened, synchronize, reopened]
 
+env:
+  HOMEBREW_NO_ANALYTICS: 1
+  HOMEBREW_NO_AUTO_UPDATE: 1
+  HOMEBREW_NO_INSTALL_CLEANUP: 1
+      
 jobs:
   build_and_upload:
   
