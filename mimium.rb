@@ -14,29 +14,32 @@ class Mimium < Formula
     sha256 "eb62a95a10ec1db69045c8186bac70c20d66328fe85fb18594a83319dcbfd901" => :catalina
     sha256 "cc2a64bc6be7fab5dd560a0ac741a2c3d5244c2c4ea8a0006937b03ff8d2a577" => :x86_64_linux
   end
-
   depends_on "bison" =>:build
   depends_on "cmake" => :build
   depends_on "flex" =>:build
-  depends_on "libsndfile" => :build
-  depends_on "llvm" =>:build
   depends_on "pkg-config" => :build
-  on_linux do
-    depends_on "gcc@9" => :build
-  end
+  depends_on "gcc@9" unless OS.mac?
+  depends_on "libsndfile"
+  depends_on "llvm"
+
+  fails_with gcc: "5"
+  fails_with gcc: "6"
+  fails_with gcc: "7"
 
   def install
     mkdir "build"
     cd "build"
     if OS.mac?
+      if MacOS.version >= :mojave
+        sdk_path = MacOS::CLT.installed? ? "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk" : MacOS.sdk_path
+        ENV["HOMEBREW_SDKROOT"] = sdk_path
+      end
+      system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", "..",
+             "-DCMAKE_OSX_SYSROOT=#{sdk_path}"
+    else
+      ENV.remove %w[LDFLAGS LIBRARY_PATH HOMEBREW_LIBRARY_PATHS], "#{HOMEBREW_PREFIX}/lib"
       system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
-    elsif OS.linux?
-      opoo "If you fail to install, try 'brew unlink gcc@5.5 && brew link gcc@9' before install.\
-      After an installation, make sure to do  'brew link gcc@5.5 --overwrite'"
-      system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_C_COMPILER=gcc-9",
-             "-DCMAKE_CXX_COMPILER=g++-9", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
     end
-
     system "make", "-j18"
     system "make", "install"
   end

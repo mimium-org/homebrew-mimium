@@ -4,8 +4,20 @@ name: CI
 on:
   push:
     branches: master
-  pull_request: []
-
+  pull_request:
+    types:
+      - assigned
+      - unassigned
+      - labeled
+      - unlabeled
+      - opened
+      - edited
+      - closed
+      - reopened
+      - synchronize
+env:
+  HOMEBREW_CC: clang
+  HOMEBREW_CXX: clang++
 jobs:
   tap_syntax:
     name: Check tap syntax
@@ -29,8 +41,12 @@ jobs:
     name: Build Linux bottle
     runs-on: ubuntu-latest
     container:
-      image: homebrew/ubuntu20.04:master
+      image: homebrew/ubuntu20.04:latest
     steps:
+      - name: Install deps
+        run: |
+          apt update
+          apt install libalsa-ocaml-dev -yq
       - name: Checkout tap
         uses: actions/checkout@v2
       - name: Set up tap
@@ -40,12 +56,12 @@ jobs:
           rm -rf "$REPO"
           ln -s $GITHUB_WORKSPACE "$REPO"
       - name: Run brew test-bot --only-setup
-        run: brew test-bot --only-setup --tap=${{github.repository}}
+        run: brew test-bot --only-setup --tap=${{github.repository}} -v
       - name: Run brew test-bot --only-formulae
         run: |
           mkdir ~/bottles
           cd ~/bottles
-          brew test-bot --only-formulae --root-url=https://github.com/${{github.repository}}  --tap=${{github.repository}}
+          brew test-bot --only-formulae --root-url=https://github.com/${{github.repository}}  --tap=${{github.repository}} -v
       - name: Output brew test-bot --only-formulae failures
         if: always()
         run: |
@@ -92,12 +108,12 @@ jobs:
           rm -rf "$REPO"
           ln -s $GITHUB_WORKSPACE "$REPO"
       - name: Run brew test-bot --only-setup
-        run: brew test-bot --only-setup --tap=${{github.repository}}
+        run: brew test-bot --only-setup --tap=${{github.repository}} -v 
       - name: Run brew test-bot --only-formulae
         run: |
           mkdir ~/bottles
           cd ~/bottles
-          brew test-bot --only-formulae --root-url=https://github.com/${{github.repository}}  --tap=${{github.repository}}
+          brew test-bot --only-formulae --root-url=https://github.com/${{github.repository}}  --tap=${{github.repository}} -v
       - name: Output brew test-bot --only-formulae failures
         if: always()
         run: |
