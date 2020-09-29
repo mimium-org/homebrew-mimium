@@ -43,11 +43,11 @@ jobs:
     steps:
       - name: Install deps
         run: |
-        apt update
-        apt install libalsa-ocaml-dev -yq
-        brew install gcc@5.5
-        brew unlink gcc@5.5
-        brew install gcc@9
+          apt update
+          apt install libalsa-ocaml-dev -yq
+          brew install gcc@5.5
+          brew unlink gcc@5.5
+          brew install gcc@9
       - name: Checkout tap
         uses: actions/checkout@v2
       - name: Set up tap
