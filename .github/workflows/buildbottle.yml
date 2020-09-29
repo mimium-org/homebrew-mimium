@@ -3,7 +3,9 @@ on:
   push:
    tags: 
           - 'v*'
-   pull_request:
+  pull_request:
+    types: [assigned, opened, synchronize, reopened]
+
 jobs:
   build_and_upload:
   
@@ -32,11 +34,12 @@ jobs:
       - name: Build Bottles
         run: |
           brew tap mimium-org/mimium
-          git -C "$(brew --repo ${{github.repository}})" status
           git config --global user.name "brewTestBot"
           git config --global user.email "me@matsuuratomoya.com"
+          mkdir -p "$(dirname $(brew --repo ${{github.repository}}))"
+          cp -a "$GITHUB_WORKSPACE" "$(brew --repo ${{github.repository}})"
           mkdir ~/bottles && cd ~/bottles
-          brew test-bot --cleanup --tap mimium-org/mimium mimium  
+          brew test-bot --cleanup --tap mimium-org/mimium mimium  --git-name=brewTestBot --git-email=me@matsuuratomoya.com -v
           cp -a ~/bottles $RUNNER_TEMP/
 
       - name: upload bottle
