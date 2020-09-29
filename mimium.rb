@@ -21,9 +21,6 @@ class Mimium < Formula
   depends_on "libsndfile" => :build
   depends_on "llvm" =>:build
   depends_on "pkg-config" => :build
-  on_linux do
-    depends_on "gcc@9" => :build
-  end
 
   def install
     mkdir "build"
@@ -32,10 +29,8 @@ class Mimium < Formula
       system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", "..",
              "-DCMAKE_OSX_SYSROOT='/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk'"
     elsif OS.linux?
-      opoo "If you fail to install, try 'brew unlink gcc@5.5 && brew link gcc@9' before install.\
-      After an installation, make sure to do  'brew link gcc@5.5 --overwrite'"
-      system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_C_COMPILER=gcc-9",
-             "-DCMAKE_CXX_COMPILER=g++-9", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
+      system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_C_COMPILER=clang",
+             "-DCMAKE_CXX_COMPILER=clang++", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
     end
 
     system "make", "-j18"
