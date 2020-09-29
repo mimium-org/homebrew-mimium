@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mimium < Formula
   desc "Programming language as an infrastructure for sound and music"
   homepage "https://mimium.org"
