@@ -15,7 +15,9 @@ on:
       - closed
       - reopened
       - synchronize
-
+env:
+  HOMEBREW_CC: clang
+  HOMEBREW_CXX: clang++
 jobs:
   tap_syntax:
     name: Check tap syntax
