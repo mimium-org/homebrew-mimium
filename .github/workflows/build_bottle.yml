@@ -43,10 +43,6 @@ jobs:
     container:
       image: homebrew/ubuntu20.04:latest
     steps:
-      - name: Install deps
-        run: |
-          apt update
-          apt install libalsa-ocaml-dev -yq
       - name: Checkout tap
         uses: actions/checkout@v2
       - name: Set up tap
