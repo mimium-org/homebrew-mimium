@@ -10,7 +10,9 @@ on:
 
 jobs:
   upload-bottles:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
+    container:
+      image: homebrew/ubuntu20.04:latest
     env:
       GIT_COMMITTER_NAME: ${{github.event.pusher.name}}
       GIT_COMMITTER_EMAIL: ${{github.event.pusher.email}}
