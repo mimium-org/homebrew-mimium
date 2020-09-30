@@ -22,6 +22,10 @@ class Mimium < Formula
   depends_on "gcc@9" if OS.linux?
   depends_on "libsndfile"
 
+  fails_with gcc: "5"
+  fails_with gcc: "6"
+  fails_with gcc: "7"
+  
   def install
     mkdir "build"
     cd "build"
@@ -33,10 +37,7 @@ class Mimium < Formula
       system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", "..",
              "-DCMAKE_OSX_SYSROOT=#{sdk_path}"
     elsif OS.linux?
-      ENV["CXX"] = "g++-9"
-      ENV["CC"] = "gcc-9"
-      ENV["HOMEBREW_CXX"] = "g++-9"
-      ENV["HOMEBREW_CC"] = "gcc-9"
+
       system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", "..",
              "-DCMAKE_CXX_COMPILER=g++-9", "-DCMAKE_C_COMPILER=gcc-9"
     end
