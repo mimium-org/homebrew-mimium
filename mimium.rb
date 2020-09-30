@@ -3,12 +3,12 @@
 class Mimium < Formula
   desc "Programming language as an infrastructure for sound and music"
   homepage "https://mimium.org"
-  url "https://github.com/mimium-org/mimium.git", revision: "5257c48f1bd3a154ea7a0b00c57f12d84d17587a", tag: "v0.1.4"
+  url "https://github.com/mimium-org/mimium.git", revision: "552514f95e2730124152f5d080b2d8d18d4e09e4", tag: "v0.1.5"
   license "MPL-2.0"
   head "https://github.com/mimium-org/mimium.git", branch: "dev"
 
   bottle do
-    root_url "https://github.com/mimium-org/homebrew-mimium/releases/download/v0.1.4"
+    root_url "https://github.com/mimium-org/homebrew-mimium/releases/download/v0.1.5"
     cellar :any_skip_relocation
     rebuild 1
     sha256 "eb62a95a10ec1db69045c8186bac70c20d66328fe85fb18594a83319dcbfd901" => :catalina
