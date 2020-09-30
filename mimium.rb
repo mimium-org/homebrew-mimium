@@ -17,15 +17,15 @@ class Mimium < Formula
   depends_on "bison" =>:build
   depends_on "cmake" => :build
   depends_on "flex" =>:build
-  depends_on "llvm" =>:build
   depends_on "pkg-config" => :build
-  depends_on "gcc@9" if OS.linux?
+  depends_on "gcc@9" unless OS.mac?
   depends_on "libsndfile"
+  depends_on "llvm"
 
   fails_with gcc: "5"
   fails_with gcc: "6"
   fails_with gcc: "7"
-  
+
   def install
     mkdir "build"
     cd "build"
@@ -36,10 +36,8 @@ class Mimium < Formula
       end
       system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", "..",
              "-DCMAKE_OSX_SYSROOT=#{sdk_path}"
-    elsif OS.linux?
-
-      system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", "..",
-             "-DCMAKE_CXX_COMPILER=g++-9", "-DCMAKE_C_COMPILER=gcc-9"
+    else
+      system "cmake", "-DBUILD_TEST=OFF", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
     end
     system "make", "-j18"
     system "make", "install"
