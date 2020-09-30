@@ -10,7 +10,7 @@ on:
 
 jobs:
   upload-bottles:
-    runs-on: ubuntu-latest
+    runs-on: macOS-latest
     env:
       GIT_COMMITTER_NAME: ${{github.event.pusher.name}}
       GIT_COMMITTER_EMAIL: ${{github.event.pusher.email}}
@@ -52,7 +52,8 @@ jobs:
           cd bottles
           git config --global user.email "$GIT_COMMITTER_EMAIL"
           git config --global user.name "$GIT_COMMITTER_NAME"
-          brew pr-upload --root-url=https://github.com/${{github.repository}} -v
+          brew pr-upload --root-url=https://github.com/mimium-org/homebrew-mimium --dry-run -v
+          brew pr-upload --root-url=https://github.com/mimium-org/homebrew-mimium/ -v
       - name: Push bottle commit
         run: |
           cd $(brew --repo ${{github.repository}})
