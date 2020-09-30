@@ -27,7 +27,7 @@ jobs:
       - name: Set up tap
         run: |
           set -e
-          brew update
+          brew update-reset
           REPO=$(brew --repo ${{github.repository}})
           mkdir -p "$REPO"
           rm -rf "$REPO"
