@@ -32,6 +32,7 @@ jobs:
             core.setOutput("head_sha", prs.data[0].head.sha)
       - name: Tap git repository
         run: |
+          brew update-reset
           brew tap ${{github.repository}}
       - name: Download workflow artifacts
         uses: Homebrew/actions/download-artifact@master
@@ -52,6 +53,7 @@ jobs:
           cd bottles
           git config --global user.email "$GIT_COMMITTER_EMAIL"
           git config --global user.name "$GIT_COMMITTER_NAME"
+          brew pr-upload --dry-run --root-url=https://github.com/mimium-org/homebrew-mimium/releases/download/$(brew cat mimium | grep "tag:" | sed -e "s/\(.*\)\(v.\..\..\)\(.*\)/\2/g") -v
           brew pr-upload --root-url=https://github.com/mimium-org/homebrew-mimium/releases/download/$(brew cat mimium | grep "tag:" | sed -e "s/\(.*\)\(v.\..\..\)\(.*\)/\2/g") -v
       - name: Push bottle commit
         run: |
