@@ -8,7 +8,7 @@ class Mimium < Formula
   head "https://github.com/mimium-org/mimium.git", branch: "dev"
 
   bottle do
-    root_url "https://github.com/mimium-org/homebrew-mimium"
+    root_url "https://dl.bintray.com/mimium-org/bottles-mimium"
     cellar :any
     rebuild 2
     sha256 "7857caf68a2c8c7bd31bb6099e2847e3eb8c1986b00ab19e4595c00ecf80ccf5" => :catalina

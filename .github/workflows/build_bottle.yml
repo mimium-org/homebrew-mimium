@@ -54,7 +54,7 @@ jobs:
         run: |
           mkdir ~/bottles
           cd ~/bottles
-          brew test-bot --only-formulae --root-url=https://github.com/${{github.repository}}  --tap=${{github.repository}} -v
+          brew test-bot --only-formulae --root-url=https://dl.bintray.com/mimium-org/bottles-mimium --tap=${{github.repository}} -v
       - name: Output brew test-bot --only-formulae failures
         if: always()
         run: |
