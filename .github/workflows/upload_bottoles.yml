@@ -47,10 +47,10 @@ jobs:
 
       - name: Upload bottles
         env:
-          HOMEBREW_BOTTLE_DOMAIN: https://dl.bintray.com/${{github.event.repository.owner.login}}
+          HOMEBREW_BOTTLE_DOMAIN: https://dl.bintray.com/mimium-org/
           HOMEBREW_BINTRAY_USER:  tomoyanonymous
           HOMEBREW_BINTRAY_KEY: ${{secrets.HOMEBREW_BINTRAY_KEY}}
-          HOMEBREW_BINTRAY_URL: https://dl.bintray.com/${{github.event.repository.owner.login}}/bottles-mimium
+          HOMEBREW_BINTRAY_URL: https://dl.bintray.com/mimium-org/bottles-mimium
         run: |
           cd bottles
           git config --global user.email "$GIT_COMMITTER_EMAIL"

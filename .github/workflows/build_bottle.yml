@@ -89,9 +89,9 @@ jobs:
     
     runs-on: macos-latest
     env:
-      HOMEBREW_BINTRAY_USER:  tomoyanonymous
-      HOMEBREW_BINTRAY_KEY: ${{secrets.HOMEBREW_BINTRAY_KEY}}
-      HOMEBREW_BINTRAY_URL: https://dl.bintray.com/mimium-org/bottles-mimium
+      BINTRAY_USER:  tomoyanonymous
+      BINTRAY_KEY: ${{secrets.HOMEBREW_BINTRAY_KEY}}
+      BINTRAY_URL: https://dl.bintray.com/mimium-org/bottles-mimium
     steps:
       - name: Checkout tap
         uses: actions/checkout@v2
@@ -110,12 +110,12 @@ jobs:
           rm -rf "$REPO"
           ln -s $GITHUB_WORKSPACE "$REPO"
       - name: Run brew test-bot --only-setup
-        run: brew test-bot --only-setup --root-url=BINTRAY_ROOT --bintray-org=BINTRAY_USER --tap=${{github.repository}} -v 
+        run: brew test-bot --only-setup --root-url=$BINTRAY_URL --bintray-org=$BINTRAY_USER --tap=${{github.repository}} -v 
       - name: Run brew test-bot --only-formulae
         run: |
           mkdir ~/bottles
           cd ~/bottles
-          brew test-bot --only-formulae --root-url=BINTRAY_ROOT --bintray-org=BINTRAY_USER --tap=${{github.repository}} -v
+          brew test-bot --only-formulae --root-url=$BINTRAY_URL --bintray-org=$BINTRAY_USER --tap=${{github.repository}} -v
       - name: Output brew test-bot --only-formulae failures
         if: always()
         run: |
