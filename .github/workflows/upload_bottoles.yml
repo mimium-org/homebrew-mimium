@@ -55,7 +55,7 @@ jobs:
           cd bottles
           git config --global user.email "$GIT_COMMITTER_EMAIL"
           git config --global user.name "$GIT_COMMITTER_NAME"
-          brew pr-upload --dry-run --root-url=https://github.com/mimium-org/homebrew-mimium/releases/download/$(brew cat mimium | grep "tag:" | sed -e "s/\(.*\)\(v.\..\..\)\(.*\)/\2/g") -v
+          brew pr-upload --dry-run --root-url=$HOMEBREW_BINTRAY_URL --bintray-org=$HOMEBREW_BINTRAY_USER -v
           brew pr-upload --root-url=$HOMEBREW_BINTRAY_URL --bintray-org=$HOMEBREW_BINTRAY_USER -v
 
       - name: Push bottle commit
