@@ -9,10 +9,10 @@ class Mimium < Formula
 
   bottle do
     root_url "https://dl.bintray.com/mimium-org/bottles-mimium"
-    cellar :any_skip_relocation
-    rebuild 1
-    sha256 "eb62a95a10ec1db69045c8186bac70c20d66328fe85fb18594a83319dcbfd901" => :catalina
-    sha256 "cc2a64bc6be7fab5dd560a0ac741a2c3d5244c2c4ea8a0006937b03ff8d2a577" => :x86_64_linux
+    cellar :any
+    rebuild 3
+    sha256 "05b76e7e79db4f9d5e3908454b9a52b4fa31c0b93908b9dd2815557e269ee7f1" => :catalina
+    sha256 "5b540dad364a4358205607a628d2da85228bce84725b667809d7f393d8678139" => :x86_64_linux
   end
   depends_on "alsa-lib" unless OS.mac?
   depends_on "bison" =>:build
