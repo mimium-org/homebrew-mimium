@@ -8,11 +8,10 @@ class Mimium < Formula
   head "https://github.com/mimium-org/mimium.git", branch: "dev"
 
   bottle do
-    root_url "https://dl.bintray.com/mimium-org/bottles-mimium"
+    root_url "BINTRAY_ROOT"
     cellar :any
-    rebuild 3
-    sha256 "05b76e7e79db4f9d5e3908454b9a52b4fa31c0b93908b9dd2815557e269ee7f1" => :catalina
-    sha256 "5b540dad364a4358205607a628d2da85228bce84725b667809d7f393d8678139" => :x86_64_linux
+    sha256 "6cbbd244b30eea9732c9b5567a9c5091d55cab8b1bb54cee0e40031ed3991edc" => :catalina
+    sha256 "b5bcb37818bbecf62fbbb46c77feb15e89bc98d98e0962d45881290b9a0fd4f5" => :x86_64_linux
   end
   depends_on "alsa-lib" unless OS.mac?
   depends_on "bison" =>:build
