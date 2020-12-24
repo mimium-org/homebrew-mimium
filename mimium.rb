@@ -21,7 +21,7 @@ class Mimium < Formula
   depends_on "pkg-config" => :build
   depends_on "gcc@9" unless OS.mac?
   depends_on "libsndfile"
-  depends_on "llvm"
+  depends_on "llvm@9"
 
   fails_with gcc: "5"
   fails_with gcc: "6"
