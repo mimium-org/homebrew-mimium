@@ -18,8 +18,6 @@ brew link gcc@5.5 --overwrite
 
 ## maintainance memo
 
-### auto release using GitHub Actions
-
-1. manually rewrite version number in mimium.rb
-2. commit and tag with same version number as in step.1
-3. GitHub Action start works
+```sh
+brew bump-formula-pr --version=0.2.0  mimium
+```
