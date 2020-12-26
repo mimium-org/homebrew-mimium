@@ -7,6 +7,15 @@ class Mimium < Formula
   license "MPL-2.0"
   head "https://github.com/mimium-org/mimium.git", branch: "dev"
 
+  bottle do
+    root_url ""
+    cellar :any
+    rebuild 4
+    sha256 "de96d5cce5a2235ae828ef31132c6b30ce8ded5d96f6597a7c6747d3a79a76db" => :big_sur
+    sha256 "1d12f3ab24b407f7ff60041f8ff92991ef59709e1acd9f9ad5185a7d92f021f9" => :catalina
+    sha256 "b5bcb37818bbecf62fbbb46c77feb15e89bc98d98e0962d45881290b9a0fd4f5" => :x86_64_linux
+  end
+
   depends_on "alsa-lib" unless OS.mac?
   depends_on "bison" =>:build
   depends_on "cmake" => :build
