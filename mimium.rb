@@ -7,12 +7,6 @@ class Mimium < Formula
   license "MPL-2.0"
   head "https://github.com/mimium-org/mimium.git", branch: "dev"
 
-  bottle do
-    root_url "BINTRAY_ROOT"
-    cellar :any
-    sha256 "6cbbd244b30eea9732c9b5567a9c5091d55cab8b1bb54cee0e40031ed3991edc" => :catalina
-    sha256 "b5bcb37818bbecf62fbbb46c77feb15e89bc98d98e0962d45881290b9a0fd4f5" => :x86_64_linux
-  end
   depends_on "alsa-lib" unless OS.mac?
   depends_on "bison" =>:build
   depends_on "cmake" => :build
