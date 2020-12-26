@@ -18,13 +18,7 @@ env:
 jobs:
   tap_syntax:
     name: Check tap syntax
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - macos-11.0
-          - macos-10.15
+    runs-on: macos-11.0
     steps:
       - uses: actions/checkout@v2
       - name: Set up tap
