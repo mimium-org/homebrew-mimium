@@ -1,23 +1,27 @@
-# Homebrew formula for [mimium](https:/github.com/mimium-org/mimium)
+# Homebrew formula for [mimium](https://mimium.org)
 
 ```bash
 brew tap mimium-org/mimium
 brew install mimium
 ```
 
-## On Linux
+Bottle(binary package) is available on macOS 10.15, 11.0 and Linuxbrew.
 
-Default gcc for Linuxbrew, which is version 5.5 may cause conflict with gcc@9 when link with standard library. If you failed to install, try
+## Update formula when the new release available
 
-```bash
-brew unlink gcc@5.5
-brew link gcc@9
-brew install mimium
-brew link gcc@5.5 --overwrite
-```
-
-## maintainance memo
+If there are no changes in depedencies, just execute
 
 ```sh
 brew bump-formula-pr --version=0.2.0  mimium
 ```
+
+Or, if you need to modidy formula, fork this repository and
+
+```sh
+cd $(brew --repository)/Library/Taps/mimium-org/homebrew-mimium
+open mimium.rb # edit 
+brew audit --strict --verbose mimium
+git add . && git commit -m "commit msg"
+git push # to your forked repo.
+```
+and make pull request to master branch of this repository.
