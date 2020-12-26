@@ -18,7 +18,13 @@ env:
 jobs:
   tap_syntax:
     name: Check tap syntax
-    runs-on: macOS-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-11.0
+          - macos-10.15
     steps:
       - uses: actions/checkout@v2
       - name: Set up tap
@@ -86,8 +92,13 @@ jobs:
     needs: tap_syntax
     if: github.event_name == 'pull_request'
     name: Build macOS bottle
-    
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-11.0
+          - macos-10.15
     env:
       BINTRAY_USER:  tomoyanonymous
       BINTRAY_KEY: ${{secrets.HOMEBREW_BINTRAY_KEY}}
