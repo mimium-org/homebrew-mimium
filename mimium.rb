@@ -19,9 +19,9 @@ class Mimium < Formula
   depends_on "cmake" => :build
   depends_on "flex" =>:build
   depends_on "pkg-config" => :build
-  depends_on "gcc@9" unless OS.mac?
-  depends_on "libsndfile"
-  depends_on "llvm"
+  depends_on "gcc@9" => :build unless OS.mac?
+  depends_on "libsndfile" => :build
+  depends_on "llvm" => :build
 
   fails_with gcc: "5"
   fails_with gcc: "6"
