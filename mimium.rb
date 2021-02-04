@@ -9,8 +9,6 @@ class Mimium < Formula
 
   bottle do
     root_url ""
-    sha256 cellar: :any,                 catalina:     "3566e94d0a81a37952c039946aef0151f3b961e954fc0fb2d0202d393ae09c38"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "5157fd53d294a9dcb15f175569e774d26c262d7f1b7b2e8de68a09b93618306e"
   end
 
   depends_on "alsa-lib" unless OS.mac?
