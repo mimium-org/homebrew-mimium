@@ -8,6 +8,7 @@ class Mimium < Formula
   head "https://github.com/mimium-org/mimium.git", branch: "dev"
 
   bottle do
+    root_url ""
   end
 
   depends_on "alsa-lib" unless OS.mac?
