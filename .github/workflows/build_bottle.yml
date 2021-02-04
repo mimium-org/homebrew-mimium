@@ -115,7 +115,7 @@ jobs:
           rm -rf "$REPO"
           ln -s $GITHUB_WORKSPACE "$REPO"
       - name: Run brew test-bot --only-setup
-        run: brew test-bot --only-setup --root-url=${BINTRAY_URL} --bintray-org=${BINTRAY_USER} --tap=${{github.repository}} -v 
+        run: brew test-bot --only-setup --root-url=$BINTRAY_URL --bintray-org=$BINTRAY_USER --tap=${{github.repository}} -v 
       - name: Run brew test-bot --only-formulae
         run: |
           mkdir ~/bottles
