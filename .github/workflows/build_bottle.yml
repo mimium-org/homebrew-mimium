@@ -91,7 +91,7 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - macos-11.0
+          # - macos-11.0 //11.0 is temporarily unavailable
           - macos-10.15
     env:
       BINTRAY_USER:  tomoyanonymous
@@ -115,12 +115,12 @@ jobs:
           rm -rf "$REPO"
           ln -s $GITHUB_WORKSPACE "$REPO"
       - name: Run brew test-bot --only-setup
-        run: brew test-bot --only-setup --root-url=$BINTRAY_URL --bintray-org=$BINTRAY_USER --tap=${{github.repository}} -v 
+        run: brew test-bot --only-setup --root-url=${BINTRAY_URL} --bintray-org=${BINTRAY_USER} --tap=${{github.repository}} -v 
       - name: Run brew test-bot --only-formulae
         run: |
           mkdir ~/bottles
           cd ~/bottles
-          brew test-bot --only-formulae --root-url=$BINTRAY_URL --bintray-org=$BINTRAY_USER --tap=${{github.repository}} -v
+          brew test-bot --only-formulae --root-url=${BINTRAY_URL} --bintray-org=${BINTRAY_USER} --tap=${{github.repository}} -v
       - name: Output brew test-bot --only-formulae failures
         if: always()
         run: |
