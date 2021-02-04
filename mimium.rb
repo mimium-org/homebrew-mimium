@@ -8,7 +8,10 @@ class Mimium < Formula
   head "https://github.com/mimium-org/mimium.git", branch: "dev"
 
   bottle do
-    root_url "dummy url"
+    root_url ""
+    rebuild 1
+    sha256 cellar: :any,                 catalina:     "774fb920b3d40ab37775f38fda7ad47b5f4abb92274f3081e7a3a64f02b99da3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "5157fd53d294a9dcb15f175569e774d26c262d7f1b7b2e8de68a09b93618306e"
   end
 
   depends_on "alsa-lib" unless OS.mac?
