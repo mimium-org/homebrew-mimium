@@ -42,7 +42,7 @@ jobs:
     env:
       HOMEBREW_BINTRAY_USER: tomoyanonymous
       HOMEBREW_BINTRAY_KEY: ${{secrets.HOMEBREW_BINTRAY_KEY}}
-      HOMEBREW_BINTRAY_URL: https://dl.bintray.com/mimium-org/bottles-mimium
+      HOMEBREW_BINTRAY_URL: https://dl.bintray.com/tomoyanonymous/bottles-mimium
     steps:
       - name: Checkout tap
         uses: actions/checkout@v2
@@ -120,7 +120,7 @@ jobs:
         run: |
           mkdir ~/bottles
           cd ~/bottles
-          brew test-bot --only-formulae --root-url=${BINTRAY_URL} --bintray-org=${BINTRAY_USER} --tap=${{github.repository}} -v
+          brew test-bot --only-formulae --root-url=$BINTRAY_URL --bintray-org=$BINTRAY_USER --tap=${{github.repository}} -v
       - name: Output brew test-bot --only-formulae failures
         if: always()
         run: |
