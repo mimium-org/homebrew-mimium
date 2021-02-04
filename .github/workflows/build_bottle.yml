@@ -96,7 +96,7 @@ jobs:
     env:
       BINTRAY_USER:  tomoyanonymous
       BINTRAY_KEY: ${{secrets.HOMEBREW_BINTRAY_KEY}}
-      BINTRAY_URL: https://dl.bintray.com/mimium-org/bottles-mimium
+      BINTRAY_URL: https://dl.bintray.com/tomoyanonymous/bottles-mimium
     steps:
       - name: Checkout tap
         uses: actions/checkout@v2
