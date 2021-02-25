@@ -40,7 +40,8 @@ class Mimium < Formula
     else
       ENV.remove %w[LDFLAGS LIBRARY_PATH HOMEBREW_LIBRARY_PATHS], "#{HOMEBREW_PREFIX}/lib"
       system "cmake", "-DCMAKE_BUILD_TYPE=Release", "--config", "release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
-      opoo "Homebrew release on Linux is currently experimental. If you failed to load on alsa plugins and crushes, try 'brew reinstall alsa-lib -s'."
+      opoo "Homebrew release on Linux is currently experimental. If you failed to load on alsa plugins and crushes, "
+      "try 'brew reinstall alsa-lib -s'."
     end
     system "make", "-j18"
     system "make", "install"
