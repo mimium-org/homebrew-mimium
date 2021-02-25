@@ -14,7 +14,7 @@ class Mimium < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux: "5157fd53d294a9dcb15f175569e774d26c262d7f1b7b2e8de68a09b93618306e"
   end
 
-  depends_on "alsa-lib" unless OS.mac?
+  # depends_on "alsa-lib" unless OS.mac? //alsa should be installed not by homebrew
   depends_on "bison" =>:build
   depends_on "cmake" => :build
   depends_on "flex" =>:build
