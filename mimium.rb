@@ -14,6 +14,7 @@ class Mimium < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux: "5157fd53d294a9dcb15f175569e774d26c262d7f1b7b2e8de68a09b93618306e"
   end
 
+  depends_on "alsa-lib" =>:build unless OS.mac?
   depends_on "bison" =>:build
   depends_on "cmake" => :build
   depends_on "flex" =>:build
@@ -39,6 +40,7 @@ class Mimium < Formula
     else
       ENV.remove %w[LDFLAGS LIBRARY_PATH HOMEBREW_LIBRARY_PATHS], "#{HOMEBREW_PREFIX}/lib"
       system "cmake", "-DCMAKE_BUILD_TYPE=Release", "--config", "release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
+      opoo "Homebrew release on Linux is currently experimental. If you failed to load on alsa plugins and crushes, try 'brew reinstall alsa-lib -s'."
     end
     system "make", "-j18"
     system "make", "install"
