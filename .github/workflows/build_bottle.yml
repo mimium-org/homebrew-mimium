@@ -45,7 +45,7 @@ jobs:
       HOMEBREW_BINTRAY_URL: https://dl.bintray.com/tomoyanonymous/bottles-mimium
     steps:
       - name: Install alsa
-        run: sudo apt-get install libasound2 libasound2-plugins
+        run: sudo apt-get install libalsa-ocaml-dev
       - name: Checkout tap
         uses: actions/checkout@v2
       - name: Set up tap
