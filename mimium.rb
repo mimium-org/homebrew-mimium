@@ -3,7 +3,7 @@
 class Mimium < Formula
   desc "Programming language as an infrastructure for sound and music"
   homepage "https://mimium.org"
-  url "https://github.com/mimium-org/mimium.git", revision: "ea6f7636f173a5a2658c6ef7e9ebdac97621816b", tag: "v0.3.0"
+  url "https://github.com/mimium-org/mimium.git", revision: "ff9b2377eb3a971ba161a1319655d9c369c00d4b", tag: "v0.3.1"
   license "MPL-2.0"
   head "https://github.com/mimium-org/mimium.git", branch: "dev"
 
@@ -14,14 +14,16 @@ class Mimium < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux: "5157fd53d294a9dcb15f175569e774d26c262d7f1b7b2e8de68a09b93618306e"
   end
 
-  depends_on "alsa-lib" unless OS.mac?
   depends_on "bison" =>:build
   depends_on "cmake" => :build
   depends_on "flex" =>:build
-  depends_on "pkg-config" => :build
   depends_on "gcc@9" => :build unless OS.mac?
-  depends_on "libsndfile" => :build
-  depends_on "llvm" => :build
+  depends_on "ncurses" => :build unless OS.mac?
+  depends_on "pkg-config" => :build
+  depends_on "zlib" => :build unless OS.mac?
+  depends_on "alsa-lib" unless OS.mac?
+  depends_on "libsndfile"
+  depends_on "llvm"
 
   fails_with gcc: "5"
   fails_with gcc: "6"
@@ -40,6 +42,8 @@ class Mimium < Formula
     else
       ENV.remove %w[LDFLAGS LIBRARY_PATH HOMEBREW_LIBRARY_PATHS], "#{HOMEBREW_PREFIX}/lib"
       system "cmake", "-DCMAKE_BUILD_TYPE=Release", "--config", "release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
+      opoo "Homebrew release on Linux is currently experimental. If you failed to load on alsa plugins and crushes, "
+      "try 'brew reinstall alsa-lib -s'."
     end
     system "make", "-j18"
     system "make", "install"
