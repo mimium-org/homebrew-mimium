@@ -3,7 +3,7 @@
 class Mimium < Formula
   desc "Programming language as an infrastructure for sound and music"
   homepage "https://mimium.org"
-  url "https://github.com/mimium-org/mimium.git", revision: "ff9b2377eb3a971ba161a1319655d9c369c00d4b", tag: "v0.3.1"
+  url "https://github.com/mimium-org/mimium.git", revision: "12fb684a030e400bb85eb69b325abea426207aaa", tag: "v0.4.0"
   license "MPL-2.0"
   head "https://github.com/mimium-org/mimium.git", branch: "dev"
 
@@ -40,7 +40,7 @@ class Mimium < Formula
              "-DCMAKE_OSX_SYSROOT=#{sdk_path}"
     else
       ENV.remove %w[LDFLAGS LIBRARY_PATH HOMEBREW_LIBRARY_PATHS], "#{HOMEBREW_PREFIX}/lib"
-      system "cmake", "-DCMAKE_BUILD_TYPE=Release", "--config", "release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
+      system "cmake", "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
       opoo "Homebrew release on Linux is currently experimental. If you failed to load on alsa plugins and crushes, "
       "try 'brew reinstall alsa-lib -s'."
     end
