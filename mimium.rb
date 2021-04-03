@@ -9,8 +9,8 @@ class Mimium < Formula
 
   bottle do
     root_url "https://dl.bintray.com/tomoyanonymous/bottles-mimium"
-    sha256 cellar: :any,                 catalina:     "656dd4affc310fb2b1ca2fa4dba7f57884f7b45a262dcb969c776027eda97bc7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "c1672d0d62dc8b6b2f085f2a11e918eff88e4afa677bc8ce08d324fa26bce7b3"
+    sha256 cellar: :any,                 catalina:     "242f4ac8ae74f7ab42cdf0babeadd4b0be536eca36e512107dc9d113af4115ea"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "ebfb122b74741f200f53d979cb5256c51d3f3ad5d190b2a82c1e94809846c5ee"
   end
 
   depends_on "bison" =>:build
