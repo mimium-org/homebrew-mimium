@@ -3,7 +3,7 @@
 class Mimium < Formula
   desc "Programming language as an infrastructure for sound and music"
   homepage "https://mimium.org"
-  url "https://github.com/mimium-org/mimium.git", revision: "ff9b2377eb3a971ba161a1319655d9c369c00d4b", tag: "v0.3.1"
+  url "https://github.com/mimium-org/mimium.git", revision: "4ac36f25a17324954bf36edbad1fc7fa785f6c74", tag: "v0.4.0"
   license "MPL-2.0"
   head "https://github.com/mimium-org/mimium.git", branch: "dev"
 
