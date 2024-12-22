@@ -1,3 +1,5 @@
+# *This repository was for mimium v0.x and no longer used*. See [mimium-org/mimium-rs](https://github.com/mimium-org/mimium-rs) to install the latest version of mimium.
+
 # Homebrew formula for [mimium](https://mimium.org)
 
 ```bash
